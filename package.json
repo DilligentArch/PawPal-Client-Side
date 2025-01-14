@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.1",
+    "@egjs/react-flicking": "^4.12.0",
     "flowbite-react": "^0.10.2",
     "localforage": "^1.10.0",
     "lucide-react": "^0.471.1",
     "match-sorter": "^8.0.0",
     "react": "^18.3.1",
+    "react-awesome-slider": "^4.1.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.1",
     "sort-by": "^1.2.0"
