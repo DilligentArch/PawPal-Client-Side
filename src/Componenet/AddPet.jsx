@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -6,9 +6,11 @@ import StarterKit from "@tiptap/starter-kit";
 import axios from "axios";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const AddPet = () => {
   const { register, handleSubmit, control, setValue, reset} = useForm();
+   const {user}= useContext(AuthContext)
   const axiosSecure = useAxiosSecure();
   const editor = useEditor({
     extensions: [StarterKit],
@@ -40,51 +42,57 @@ const AddPet = () => {
       return null;
     }
   };
-
   const onSubmit = async (data) => {
-    // Step 1: Handle image upload
     let imageUrl = null;
     if (data.petImage?.[0]) {
       imageUrl = await handleImageUpload(data.petImage[0]);
     }
-
+  
     if (!imageUrl) {
       alert("Image upload failed. Please try again.");
       return;
     }
-
-    // Step 2: Prepare the data object
+  
+    const currentDate = new Date().toISOString().split("T")[0];
+    const capitalizeFirstLetter = (str) =>
+      str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  
+    const petCategory = data.petCategory?.value
+      ? capitalizeFirstLetter(data.petCategory.value)
+      : null;
+  
     const petData = {
       petName: data.petName,
       petAge: data.petAge,
-      petCategory: data.petCategory?.value || null,
+      petCategory,
       petLocation: data.petLocation,
       shortDescription: data.shortDescription,
       longDescription: editor?.getHTML() || "",
-      petImage: imageUrl, // Image URL from ImageBB
+      petImage: imageUrl,
+      dateAdded: currentDate,
+      status: "Not adopted",
+      addedBy: user.email,
+      requestedBy: 'None',
     };
-
-    // console.log("Data to submit:", petData);
-
-    axiosSecure.post('/pets', petData)
-    .then(res => {
-        // console.log(res.data)
-        if (res.data.insertedId) {
-            Swal.fire({
-                position: "top-center",
-                icon: "success",
-                title: `You have succesfully added ${petData.petName} `,
-                showConfirmButton: false,
-                timer: 1500
-                
-            });
-            reset();
-            editor?.commands.setContent("");
-           
-        }
-
-    })
+  
+    axiosSecure.post("/pets", petData).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: `You have successfully added ${petData.petName}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+  
+        reset(); // Resets the entire form
+        editor?.commands.setContent(""); // Clears the editor content
+        setValue("petCategory", null); // Explicitly reset petCategory
+      }
+    });
   };
+  
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-green-50 mt-64">
