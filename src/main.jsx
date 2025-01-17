@@ -10,6 +10,8 @@ import Home from "./Componenet/Home";
 import Login from "./Componenet/Login";
 import AuthProvider from "./AuthProvider/AuthProvider";
 import Register from "./Componenet/Register";
+import DashboardLayout from "./DashboardLayout/DashboardLayout";
+import AddPet from "./Componenet/AddPet";
 
 
 const router = createBrowserRouter([
@@ -30,6 +32,18 @@ const router = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+  {
+    path: "/dashboard/add-pet",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <AddPet></AddPet>
+      },
+
+    ]
+
   },
 ]);
 

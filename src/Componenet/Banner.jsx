@@ -17,7 +17,7 @@ const Banner = () => {
       id: 2,
       title: "Help Animals in Need",
       description: "Support our donation campaigns",
-      image: "https://i.ibb.co.com/XpCwx5c/photo-1587896046517-d8154a1e633c.jpg"
+      image: "https://i.ibb.co.com/FqnscGv/cat-4778387-640.jpg"
     },
     {
       id: 3,
