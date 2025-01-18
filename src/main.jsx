@@ -18,6 +18,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import MyPets from "./Componenet/MyPets";
+import UpdatePet from "./Componenet/UpdatePet";
 
 const queryClient = new QueryClient();
 
@@ -46,17 +48,24 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard/add-pet",
+    path: "/user-dashboard/add-pets",
     element: <DashboardLayout />,
     children: [
       {
-        index: true,
-        element: <AddPet></AddPet>
+        index:true,
+        element: <AddPet />,
       },
-
-    ]
-
-  },
+      {
+        path: "my-pets", // Correctly define the path
+        element: <MyPets />,
+      },
+      {
+        path: "update-pets", 
+        element: <UpdatePet />,
+      },
+    ],
+  }
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

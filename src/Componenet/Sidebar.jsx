@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaPlus, FaPaw, FaHandsHelping, FaDonate } from "react-icons/fa";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Sidebar = () => {
+  const {user}=useContext(AuthContext);
   return (
     <div className="lg:h-[85rem] lg:w-80 bg-green-600 text-white flex flex-col justify-between shadow-lg">
       {/* Logo Section */}
@@ -18,7 +20,7 @@ const Sidebar = () => {
         <ul className=" space-y-4 px-4">
           <li >
             <Link
-              to="/dashboard/add-pet"
+              to="/user-dashboard/add-pets"
               className=" flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaPlus />
@@ -27,7 +29,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/dashboard/my-pets"
+              to="/user-dashboard/add-pets/my-pets"
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaPaw />
@@ -36,7 +38,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/dashboard/adoption-requests"
+              to="/user-dashboard/add-pets/adoption-requests"
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaHandsHelping />
@@ -45,7 +47,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/dashboard/create-donation"
+              to="/user-dashboard/add-pets/create-donation"
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaDonate />
@@ -54,7 +56,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/dashboard/my-donations"
+              to="/user-dashboard/add-pets/my-donations"
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaHandsHelping />
@@ -63,7 +65,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/dashboard/donations"
+              to="/user-dashboard/donations"
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaDonate />

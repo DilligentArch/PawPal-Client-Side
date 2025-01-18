@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./useAxiosSecure";
+import useAxiosPublic from "./useAxiosPublic";
 
 
 const usePets = () => {
-    const axiosSecure=useAxiosSecure();
+    const axiosPublic=useAxiosPublic();
     const {refetch,data:pet=[]} =useQuery({
         queryKey:['pet'],
         queryFn: async()=>{
-            const res =await axiosSecure.get("/pets");
+            const res =await axiosPublic.get("/pets");
             return res.data;
         }
     })

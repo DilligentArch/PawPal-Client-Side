@@ -94,7 +94,7 @@ const Navbar = () => {
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 ring-1 ring-black ring-opacity-5">
                     <Link
-                      to="/dashboard/add-pet"
+                      to="/user-dashboard/add-pets"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsProfileOpen(false)} // Close dropdown
                     >

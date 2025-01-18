@@ -9,7 +9,8 @@ const DashboardLayout = () => {
         <div >
             <Navbar />
             <main className='h-screen lg:flex gap-36'>
-                <Sidebar className=''  />
+                <Sidebar   />
+                
                  <Outlet />
             </main>
         </div>
