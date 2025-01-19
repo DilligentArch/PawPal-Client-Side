@@ -99,7 +99,7 @@ const MyPets = () => {
   // Handlers
   const handleUpdate = (pet) => {
     console.log("Update pet:", pet);
-    navigate('/user-dashboard/add-pets/update-pets', { state: { pet } });
+    navigate('/user-dashboard/update-pets', { state: { pet } });
   };
   
 
@@ -130,9 +130,36 @@ const MyPets = () => {
     });
   };
 
-  const handleAdopt = (pet) => {
-    console.log("Mark as adopted:", pet);
-    // Update pet's adoption status
+  const handleAdopt = (data) => {
+    const updatedPetData = {
+        
+         status: "Adopted",
+        
+       };
+   
+       axiosSecure.put(`/pets-status/${data._id}`, updatedPetData)
+         .then((res) => {
+           if (res.data.modifiedCount > 0) {
+             Swal.fire({
+               position: "top-center",
+               icon: "success",
+               title: `You have successfully updated ${updatedPetData.petName}`,
+               showConfirmButton: false,
+               timer: 1500,
+             });
+             refetch();
+           }
+         })
+         .catch(error => {
+           console.error("Failed to update pet:", error);
+           Swal.fire({
+             position: "top-center",
+             icon: "error",
+             title: "Failed to update pet",
+             text: "Please try again",
+             showConfirmButton: true
+           });
+         });
   };
 
   return (

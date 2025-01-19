@@ -29,7 +29,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/user-dashboard/add-pets/my-pets"
+              to="/user-dashboard/my-pets"
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaPaw />
@@ -38,7 +38,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/user-dashboard/add-pets/adoption-requests"
+              to="/user-dashboard/adoption-requests"
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaHandsHelping />
@@ -47,7 +47,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/user-dashboard/add-pets/create-donation"
+              to="/user-dashboard/create-donation"
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaDonate />
@@ -56,7 +56,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
-              to="/user-dashboard/add-pets/my-donations"
+              to="/user-dashboard/my-donations"
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
             >
               <FaHandsHelping />

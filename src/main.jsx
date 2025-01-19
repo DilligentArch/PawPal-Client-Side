@@ -20,6 +20,7 @@ import {
 } from '@tanstack/react-query'
 import MyPets from "./Componenet/MyPets";
 import UpdatePet from "./Componenet/UpdatePet";
+import AddCampaign from "./Componenet/AddCampaign";
 
 const queryClient = new QueryClient();
 
@@ -48,11 +49,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/user-dashboard/add-pets",
+    path: "/user-dashboard",
     element: <DashboardLayout />,
     children: [
       {
-        index:true,
+        path:"add-pets",
         element: <AddPet />,
       },
       {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "update-pets", 
         element: <UpdatePet />,
+      },
+      {
+        path: "create-donation", 
+        element: <AddCampaign />,
       },
     ],
   }

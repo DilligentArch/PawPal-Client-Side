@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -14,6 +14,7 @@ const UpdatePet = () => {
   const pet = location.state?.pet;
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const navigate= useNavigate();
 
   // Define petCategories first
   const petCategories = [
@@ -102,6 +103,7 @@ const UpdatePet = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          navigate("/user-dashboard/my-pets");
         }
       })
       .catch(error => {
