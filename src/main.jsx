@@ -21,6 +21,7 @@ import {
 import MyPets from "./Componenet/MyPets";
 import UpdatePet from "./Componenet/UpdatePet";
 import AddCampaign from "./Componenet/AddCampaign";
+import DonationCampaign from "./Componenet/DonationCampaign";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/donations",
+        element: <DonationCampaign />,
       },
     ],
   },
