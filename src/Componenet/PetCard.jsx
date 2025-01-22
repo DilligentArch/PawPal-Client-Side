@@ -1,7 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const PetCard = ({ singlePet }) => {
-  const { petImage, petName, petAge, petLocation } = singlePet;
+  const {_id, petImage, petName, petAge, petLocation } = singlePet;
+  const navigate=useNavigate();
+  const handleNavi=()=>{
+    navigate(`/pet-details/${_id}`);
+  }
 
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -24,7 +30,7 @@ const PetCard = ({ singlePet }) => {
         <p className="text-sm text-gray-500">Location: {petLocation}</p>
 
         {/* View Details Button */}
-        <button
+        <button onClick={handleNavi}
           className="mt-4 w-full py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition"
         >
           View Details

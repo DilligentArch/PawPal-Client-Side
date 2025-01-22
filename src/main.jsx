@@ -22,6 +22,7 @@ import MyPets from "./Componenet/MyPets";
 import UpdatePet from "./Componenet/UpdatePet";
 import AddCampaign from "./Componenet/AddCampaign";
 import DonationCampaign from "./Componenet/DonationCampaign";
+import PetDetails from "./Componenet/PetDetails";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/pets",
         element: <Pets></Pets>
+      },
+      {
+        path: "/pet-details/:id",
+        element: <PetDetails></PetDetails>,
       },
       {
         path: "/login",
