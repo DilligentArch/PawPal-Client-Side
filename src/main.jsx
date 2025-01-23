@@ -23,6 +23,7 @@ import UpdatePet from "./Componenet/UpdatePet";
 import AddCampaign from "./Componenet/AddCampaign";
 import DonationCampaign from "./Componenet/DonationCampaign";
 import PetDetails from "./Componenet/PetDetails";
+import AdoptionRequest from "./Componenet/AdoptionRequest";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
       {
         path:"add-pets",
         element: <AddPet />,
+      },
+      {
+        path:"adoption-requests",
+        element: <AdoptionRequest />,
       },
       {
         path: "my-pets", // Correctly define the path
