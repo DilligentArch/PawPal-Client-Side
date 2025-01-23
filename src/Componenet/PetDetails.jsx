@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import usePetDetails from "../Hooks/usePetDetails";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useParams } from "react-router-dom";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const PetDetails = () => {
+  const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const [petDetails] = usePetDetails(id);
   const { user } = useContext(AuthContext);
@@ -22,6 +25,7 @@ const PetDetails = () => {
     shortDescription,
     longDescription,
     petImage,
+    addedBy,
   } = petDetails || {};
 
   const formattedDescription = longDescription?.replace(/<\/?p>/g, "");
@@ -35,29 +39,31 @@ const PetDetails = () => {
       petId: _id,
       petName,
       petImage,
+      addedBy,
       userName: user?.displayName,
       userEmail: user?.email,
       ...data,
     };
 
-    try {
+   
       // Example POST request to save adoption data
-      const response = await fetch("/api/adoptions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(adoptionRequest),
-      });
+         axiosSecure.post("/request", adoptionRequest).then((res) => {
+            if (res.data.insertedId) {
+              Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: `You have successfully send request to adopt the pet`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+        
+              reset(); // Resets the entire form
+              setShowModal(false);
+             
+            }
+          });
 
-      if (response.ok) {
-        console.log("Adoption Request Submitted:", adoptionRequest);
-        setShowModal(false);
-        reset();
-      } else {
-        console.error("Failed to submit adoption request.");
-      }
-    } catch (error) {
-      console.error("Error submitting adoption request:", error);
-    }
+      
   };
 
   return (
