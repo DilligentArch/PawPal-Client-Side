@@ -24,6 +24,9 @@ import AddCampaign from "./Componenet/AddCampaign";
 import DonationCampaign from "./Componenet/DonationCampaign";
 import PetDetails from "./Componenet/PetDetails";
 import AdoptionRequest from "./Componenet/AdoptionRequest";
+import MyCampaign from "./Componenet/MyCampaign";
+import EditCampaign from "./Componenet/EditCampaign";
+import CampaignDetails from "./Componenet/CampaignDetails";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +60,10 @@ const router = createBrowserRouter([
         path: "/donations",
         element: <DonationCampaign />,
       },
+      {
+        path: "/campaign-details/:id",
+        element: <CampaignDetails />,
+      },
     ],
   },
   {
@@ -72,7 +79,7 @@ const router = createBrowserRouter([
         element: <AdoptionRequest />,
       },
       {
-        path: "my-pets", // Correctly define the path
+        path: "my-pets", 
         element: <MyPets />,
       },
       {
@@ -82,6 +89,14 @@ const router = createBrowserRouter([
       {
         path: "create-donation", 
         element: <AddCampaign />,
+      },
+      {
+        path: "my-donations", 
+        element: <MyCampaign />,
+      },
+      {
+        path: "edit-campaign/:id", 
+        element: <EditCampaign />,
       },
     ],
   }

@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CampaignCard = ({ singleCamp }) => {
+  const navigate=useNavigate();
   const {
+    _id,
     petName,
     petImage,
     maxDonationAmount,
@@ -9,6 +12,9 @@ const CampaignCard = ({ singleCamp }) => {
     lastDateOfDonation,
     shortDescription,
   } = singleCamp;
+  const handleNavi = () => {
+    navigate(`/campaign-details/${_id}`);
+  }
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-4">
@@ -41,7 +47,7 @@ const CampaignCard = ({ singleCamp }) => {
       {/* View Details Button */}
       <button
         className="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
-        onClick={() => alert(`View details for ${petName}`)}
+        onClick={handleNavi}
       >
         View Details
       </button>
