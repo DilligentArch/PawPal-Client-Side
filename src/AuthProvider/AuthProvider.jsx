@@ -11,11 +11,13 @@ import {
   signInWithPopup,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+  const axiosSecure=useAxiosSecure();
   const provider = new GoogleAuthProvider();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -58,6 +60,25 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      if (currentUser?.email) {
+        axiosSecure
+          .post("/users", {
+            name: currentUser?.displayName || "Anonymous",
+            image: currentUser?.photoURL || "https://via.placeholder.com/150",
+            email: currentUser?.email,
+            isAdmin: false,
+          })
+          .then((response) => {
+            if (response.data.message === "User already exists") {
+              // console.log("User already exists in the database.");
+            } else {
+              // console.log("User added to the database successfully.");
+            }
+          })
+          .catch((error) => {
+            // console.error("Error saving user to the database:", error);
+          });
+      }
       setLoading(false);
     });
 

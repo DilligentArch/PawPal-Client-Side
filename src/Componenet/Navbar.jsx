@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useLocation, Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logOut().then(() => {
-      alert("Successfully logged out!");
+      toast.success("Successfully logged out!");
       setIsProfileOpen(false); // Close dropdown
     });
   };
@@ -98,7 +99,14 @@ const Navbar = () => {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsProfileOpen(false)} // Close dropdown
                     >
-                      Dashboard
+                     User Dashboard
+                    </Link>
+                    <Link
+                      to="/admin-dashboard"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsProfileOpen(false)} // Close dropdown
+                    >
+                     Admin Dashboard
                     </Link>
                     <button
                       onClick={handleLogout}
