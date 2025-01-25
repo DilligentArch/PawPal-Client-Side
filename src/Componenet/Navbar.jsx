@@ -102,7 +102,7 @@ const Navbar = () => {
                      User Dashboard
                     </Link>
                     <Link
-                      to="/admin-dashboard"
+                      to="/admin-dashboard/users"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsProfileOpen(false)} // Close dropdown
                     >

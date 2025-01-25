@@ -28,6 +28,7 @@ import MyCampaign from "./Componenet/MyCampaign";
 import EditCampaign from "./Componenet/EditCampaign";
 import CampaignDetails from "./Componenet/CampaignDetails";
 import AdminDashboard from "./AdminDashboardLayout.jsx/AdminDashboard";
+import Users from "./Componenet/Users";
 
 const queryClient = new QueryClient();
 
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
     path: "/Admin-dashboard",
     element: <AdminDashboard />,
     children: [
+      {
+        path: "users",
+        element: <Users />,
+      },
     ],
   }
   
