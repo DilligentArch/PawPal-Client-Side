@@ -5,13 +5,14 @@ import {
   getSortedRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import usePetAddBy from "../Hooks/usePetAddBy";
+
 import Swal from "sweetalert2";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
+import useAllPets from "../Hooks/useAllPets";
 
-const MyPets = () => {
-  const [pets, refetch] = usePetAddBy(); // Fetch user's added pets
+const AdminPet = () => {
+  const [pets, refetch] = useAllPets();
   const [sorting, setSorting] = useState([]);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
@@ -58,6 +59,8 @@ const MyPets = () => {
         header: "Actions",
         cell: ({ row }) => {
           const pet = row.original;
+          const isAdopted = pet.status === "Adopted";
+          
           return (
             <div className="flex gap-2">
               <button
@@ -74,14 +77,13 @@ const MyPets = () => {
               </button>
               <button
                 className={`px-3 py-1 rounded ${
-                  pet.status === "Adopted"
-                    ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                  isAdopted 
+                    ? "bg-red-500 text-white hover:bg-red-600" 
                     : "bg-green-500 text-white hover:bg-green-600"
                 }`}
-                onClick={() => handleAdopt(pet)}
-                disabled={pet.status === "Adopted"}
+                onClick={() => handleAdoptionToggle(pet)}
               >
-                Mark as Adopted
+                {isAdopted ? "Cancel Adoption" : "Mark as Adopted"}
               </button>
             </div>
           );
@@ -108,7 +110,7 @@ const MyPets = () => {
     console.log("Update pet:", pet);
     navigate('/user-dashboard/update-pets', { state: { pet } });
   };
-
+  
   const handleDelete = (pet) => {
     Swal.fire({
         title: "Are you sure?",
@@ -135,34 +137,33 @@ const MyPets = () => {
     });
   };
 
-  const handleAdopt = (data) => {
-    const updatedPetData = {
-         status: "Adopted",
-       };
-   
-       axiosSecure.put(`/pets-status/${data._id}`, updatedPetData)
-         .then((res) => {
-           if (res.data.modifiedCount > 0) {
-             Swal.fire({
-               position: "top-center",
-               icon: "success",
-               title: `You have successfully updated ${data.petName}`,
-               showConfirmButton: false,
-               timer: 1500,
-             });
-             refetch();
-           }
-         })
-         .catch(error => {
-           console.error("Failed to update pet:", error);
-           Swal.fire({
-             position: "top-center",
-             icon: "error",
-             title: "Failed to update pet",
-             text: "Please try again",
-             showConfirmButton: true
-           });
-         });
+  const handleAdoptionToggle = (data) => {
+    const newStatus = data.status === "Adopted" ? "Not adopted" : "Adopted";
+    const updatedPetData = { status: newStatus };
+
+    axiosSecure.put(`/pets-status/${data._id}`, updatedPetData)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: `Successfully updated adoption status for ${data.petName}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          refetch();
+        }
+      })
+      .catch(error => {
+        console.error("Failed to update pet status:", error);
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "Failed to update pet status",
+          text: "Please try again",
+          showConfirmButton: true
+        });
+      });
   };
 
   return (
@@ -221,4 +222,4 @@ const MyPets = () => {
   );
 };
 
-export default MyPets; 
+export default AdminPet;

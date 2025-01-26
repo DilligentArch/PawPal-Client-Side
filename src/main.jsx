@@ -29,6 +29,9 @@ import EditCampaign from "./Componenet/EditCampaign";
 import CampaignDetails from "./Componenet/CampaignDetails";
 import AdminDashboard from "./AdminDashboardLayout.jsx/AdminDashboard";
 import Users from "./Componenet/Users";
+import PrivateRoute from "./Routes/PrivateRoute";
+import AdminRoute from "./Routes/AdminRoute";
+import AdminPet from "./Componenet/AdminPet";
 
 const queryClient = new QueryClient();
 
@@ -70,7 +73,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/user-dashboard",
-    element: <DashboardLayout />,
+    element: <PrivateRoute>
+      <DashboardLayout />
+    </PrivateRoute>,
     children: [
       {
         path:"add-pets",
@@ -104,11 +109,17 @@ const router = createBrowserRouter([
   },
   {
     path: "/Admin-dashboard",
-    element: <AdminDashboard />,
+    element: <AdminRoute>
+      <AdminDashboard />
+    </AdminRoute>,
     children: [
       {
         path: "users",
-        element: <Users />,
+        element:<Users />,
+      },
+      {
+        path: "all-pets",
+        element:<AdminPet />,
       },
     ],
   }

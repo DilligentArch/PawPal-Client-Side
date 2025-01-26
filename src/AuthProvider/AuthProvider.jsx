@@ -11,13 +11,15 @@ import {
   signInWithPopup,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
+
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-  const axiosSecure=useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
+  // const axiosSecure=useAxiosSecure();
   const provider = new GoogleAuthProvider();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -61,7 +63,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser?.email) {
-        axiosSecure
+        axiosPublic
           .post("/users", {
             name: currentUser?.displayName || "Anonymous",
             image: currentUser?.photoURL || "https://via.placeholder.com/150",
@@ -79,6 +81,22 @@ const AuthProvider = ({ children }) => {
             // console.error("Error saving user to the database:", error);
           });
       }
+      if (currentUser) {
+        // get token and store client
+        const userInfo = { email: currentUser.email };
+        axiosPublic.post('/jwt', userInfo)
+            .then(res => {
+                if (res.data.token) {
+                    localStorage.setItem('access-token', res.data.token);
+                    setLoading(false);
+                }
+            })
+    }
+    else {
+        // TODO: remove token (if token stored in the client side: Local storage, caching, in memory)
+        localStorage.removeItem('access-token');
+        setLoading(false);
+    }
       setLoading(false);
     });
 
