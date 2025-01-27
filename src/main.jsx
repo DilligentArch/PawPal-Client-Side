@@ -32,6 +32,9 @@ import Users from "./Componenet/Users";
 import PrivateRoute from "./Routes/PrivateRoute";
 import AdminRoute from "./Routes/AdminRoute";
 import AdminPet from "./Componenet/AdminPet";
+import UpdateAdminPet from "./Componenet/UpdateAdminPet";
+import AdminAllCampaign from "./Componenet/AdminAllCampaign";
+import AdminEditCampaign from "./Componenet/AdminEditCampaign";
 
 const queryClient = new QueryClient();
 
@@ -108,7 +111,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/Admin-dashboard",
+    path: "/admin-dashboard",
     element: <AdminRoute>
       <AdminDashboard />
     </AdminRoute>,
@@ -120,6 +123,18 @@ const router = createBrowserRouter([
       {
         path: "all-pets",
         element:<AdminPet />,
+      },
+      {
+        path: "update-pets",
+        element:<UpdateAdminPet />,
+      },
+      {
+        path: "all-donations",
+        element:<AdminAllCampaign />,
+      },
+      {
+        path: "update-donations/:id",
+        element:<AdminEditCampaign />,
       },
     ],
   }

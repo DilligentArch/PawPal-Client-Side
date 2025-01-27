@@ -107,8 +107,8 @@ const AdminPet = () => {
 
   // Handlers
   const handleUpdate = (pet) => {
-    console.log("Update pet:", pet);
-    navigate('/user-dashboard/update-pets', { state: { pet } });
+    // console.log("Update pet:", pet);
+    navigate('/admin-dashboard/update-pets', { state: { pet } });
   };
   
   const handleDelete = (pet) => {
@@ -170,7 +170,7 @@ const AdminPet = () => {
     <div className="bg-green-50  mt-24">
       <div className="max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-8">
         <h2 className="text-3xl font-bold text-green-600 mb-6 text-center">
-          My Added Pets
+          All Pets
         </h2>
 
         <div className="overflow-x-auto">
