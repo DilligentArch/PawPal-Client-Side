@@ -5,11 +5,13 @@ import CallToAction from './CallToAction';
 import AboutUs from './AboutUs';
 import Testimonials from './Testimonials';
 import HowItWorks from './HowItWorks';
+import { Helmet } from 'react-helmet';
 
 
 const Home = () => {
     return (
         <div>
+           
            <Banner></Banner>
            <PetCategorySection></PetCategorySection>
            <CallToAction></CallToAction>

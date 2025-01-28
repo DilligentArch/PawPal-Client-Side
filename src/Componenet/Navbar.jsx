@@ -12,8 +12,33 @@ const Navbar = () => {
   const location = useLocation();
   const dropdownRef = useRef(null);
   const { users } = useUsers();
+ 
+  useEffect(() => {
+    const titles = {
+      "/": "PawPal - Home",
+      "/pets": "PawPal - Pet Listings",
+      "/donations": "PawPal - Donation Campaigns",
+      "/login": "PawPal - Login",
+      "/register": "PawPal - Register",
+      "/update-profile": "PawPal - Update Profile",
+      "/user-dashboard/add-pets": "PawPal - Add Pet",
+      "/user-dashboard/my-pets": "PawPal - My Pets",
+      "/user-dashboard/adoption-requests": "PawPal - Adoption Requests",
+      "/user-dashboard/create-donation": "PawPal - Create Donation Campaign",
+      "/user-dashboard/my-donations": "PawPal - My Donation Campaigns",
+      "/user-dashboard/donations": "PawPal - My Donations",
+      "/admin-dashboard/users": "PawPal - Admin Dashboard - Users",
+      "/admin-dashboard/all-pets": "PawPal - Admin Dashboard - All Pets",
+      "/admin-dashboard/all-donations": "PawPal - Admin Dashboard - All Donations",
+    };
+
+    const defaultTitle = "PawPal - Pet Donation & Adoption Platform";
+    document.title = titles[location.pathname] || defaultTitle;
+  }, [location.pathname]);
+
+
   
-  // Find the current user in users array and get their isAdmin status
+ 
   const currentUser = users?.find(u => u.email === user?.email);
   const isAdmin = currentUser?.isAdmin || false;
 

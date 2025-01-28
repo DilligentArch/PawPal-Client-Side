@@ -78,20 +78,20 @@ const AdminAllCampaign = () => {
           <thead>
             <tr className="bg-gray-200">
               <th className="px-4 py-2">Pet Name</th>
-              <th className="px-4 py-2">Max Donation Amount</th>
+              <th className="px-4 py-2"> Donation Needed</th>
               <th className="px-4 py-2">Donation Progress</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {camp.map((campaign) => {
-              const { _id, petName, maxDonationAmount, donatedAmount, pause } = campaign;
-              const progressPercentage = Math.min((donatedAmount / maxDonationAmount) * 100, 100);
+              const { _id, petName, totalDonationNeeded, donatedAmount, pause } = campaign;
+              const progressPercentage = Math.min((donatedAmount / totalDonationNeeded) * 100, 100);
 
               return (
                 <tr key={_id} className="border-b">
                   <td className="px-4 py-2 text-center">{petName}</td>
-                  <td className="px-4 py-2 text-center">${maxDonationAmount}</td>
+                  <td className="px-4 py-2 text-center">${totalDonationNeeded}</td>
                   <td className="px-4 py-2 text-center">
                     <div className="w-full bg-gray-300 rounded-full">
                       <div
