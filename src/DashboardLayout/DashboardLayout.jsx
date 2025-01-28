@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../Componenet/Navbar';
 import Sidebar from '../Componenet/Sidebar';
+import Footer from '../Componenet/Footer';
 
 
 const DashboardLayout = () => {
@@ -13,6 +14,7 @@ const DashboardLayout = () => {
                 
                  <Outlet />
             </main>
+            <footer className='mt-[80rem] md:mt-[80rem] lg:mt-[23rem]'><Footer></Footer> </footer>
         </div>
     );
 };

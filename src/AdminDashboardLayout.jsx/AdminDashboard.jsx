@@ -3,6 +3,7 @@ import React from 'react';
 import AdminSidebar from '../Componenet/AdminSidebar';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../Componenet/Navbar';
+import Footer from '../Componenet/Footer';
 
 const AdminDashboard = () => {
     return (
@@ -13,6 +14,8 @@ const AdminDashboard = () => {
                 
                  <Outlet />
             </main>
+          
+            <footer className='mt-[80rem] md:mt-[80rem] lg:mt-[23rem]'>  <Footer></Footer></footer>
         </div>
     );
 };

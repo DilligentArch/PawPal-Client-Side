@@ -37,6 +37,7 @@ import AdminAllCampaign from "./Componenet/AdminAllCampaign";
 import AdminEditCampaign from "./Componenet/AdminEditCampaign";
 import MyDonation from "./Componenet/MyDonation";
 import UpdateProfile from "./Componenet/UpdateProfile";
+import ErrorElement from "./Componenet/ErrorElement";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorElement />,
     children: [
       {
         index: true,
