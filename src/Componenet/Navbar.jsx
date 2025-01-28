@@ -3,6 +3,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useLocation, Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import useUsers from "../Hooks/useUsers";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,6 +11,11 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const location = useLocation();
   const dropdownRef = useRef(null);
+  const { users } = useUsers();
+  
+  // Find the current user in users array and get their isAdmin status
+  const currentUser = users?.find(u => u.email === user?.email);
+  const isAdmin = currentUser?.isAdmin || false;
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -23,8 +29,16 @@ const Navbar = () => {
   const handleLogout = () => {
     logOut().then(() => {
       toast.success("Successfully logged out!");
-      setIsProfileOpen(false); // Close dropdown
+      setIsProfileOpen(false);
     });
+  };
+
+  const handleAdminDashboardClick = (e) => {
+    if (!isAdmin) {
+      e.preventDefault();
+      toast.error("You don't have permission to access the admin dashboard");
+    }
+    setIsProfileOpen(false);
   };
 
   // Close the dropdown if clicked outside
@@ -97,16 +111,26 @@ const Navbar = () => {
                     <Link
                       to="/user-dashboard/add-pets"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setIsProfileOpen(false)} // Close dropdown
+                      onClick={() => setIsProfileOpen(false)}
                     >
-                     User Dashboard
+                      User Dashboard
                     </Link>
                     <Link
                       to="/admin-dashboard/users"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setIsProfileOpen(false)} // Close dropdown
+                      className={`block px-4 py-2 text-sm ${
+                        isAdmin ? 'text-gray-700 hover:bg-gray-100' : 'text-gray-400 cursor-not-allowed'
+                      }`}
+                      onClick={handleAdminDashboardClick}
+                      aria-disabled={!isAdmin}
                     >
-                     Admin Dashboard
+                      Admin Dashboard
+                    </Link>
+                    <Link
+                      to="/update-profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsProfileOpen(false)}
+                    >
+                      Update Profile
                     </Link>
                     <button
                       onClick={handleLogout}
