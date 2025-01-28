@@ -55,6 +55,8 @@ PawPal is designed to connect pet lovers and donors with pet donation campaigns 
   - `axios`
   - `sweetalert2`
   - `react-icons`
+  - `react-loading-skeleaton`
+  - ` react-intersection-observe`
 
 - **Backend**:
   - `express`

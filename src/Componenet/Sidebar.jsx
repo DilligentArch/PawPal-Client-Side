@@ -6,7 +6,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 const Sidebar = () => {
   const {user}=useContext(AuthContext);
   return (
-    <div className="lg:h-[67rem] lg:w-80 bg-green-600 text-white flex flex-col justify-between shadow-lg">
+    <div className="lg:h-[67rem] lg:w-80 bg-green-600 text-white flex flex-col justify-between shadow-lg max-w-screen-2xl ">
       {/* Logo Section */}
       <div className="p-4 mt-28 flex items-center justify-center gap-2 mb-10">
         <img src="/kitten.png" className="w-7 mb-1"/>
