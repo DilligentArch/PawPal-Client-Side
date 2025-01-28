@@ -35,6 +35,7 @@ import AdminPet from "./Componenet/AdminPet";
 import UpdateAdminPet from "./Componenet/UpdateAdminPet";
 import AdminAllCampaign from "./Componenet/AdminAllCampaign";
 import AdminEditCampaign from "./Componenet/AdminEditCampaign";
+import MyDonation from "./Componenet/MyDonation";
 
 const queryClient = new QueryClient();
 
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
       {
         path: "edit-campaign/:id", 
         element: <EditCampaign />,
+      },
+      {
+        path: "donations", 
+        element: <MyDonation />,
       },
     ],
   },

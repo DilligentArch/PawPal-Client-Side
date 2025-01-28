@@ -9,6 +9,7 @@ const MyCampaign = () => {
   const { user } = useContext(AuthContext);
   const { camp, refetch } = useCampaign();
   const axiosSecure = useAxiosSecure();
+  
 
   // Filter campaigns created by the logged-in user
   const userCampaigns = camp.filter((c) => c.createdBy === user?.email);
@@ -54,7 +55,7 @@ const MyCampaign = () => {
           <thead>
             <tr className="bg-gray-200">
               <th className="px-4 py-2">Pet Name</th>
-              <th className="px-4 py-2">Max Donation Amount</th>
+              <th className="px-4 py-2"> Donation Needed</th>
               <th className="px-4 py-2">Donation Progress</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
@@ -67,17 +68,18 @@ const MyCampaign = () => {
                 maxDonationAmount,
                 donatedAmount,
                 pause,
+                totalDonationNeeded,
               } = campaign;
 
               const progressPercentage = Math.min(
-                (donatedAmount / maxDonationAmount) * 100,
+                (donatedAmount / totalDonationNeeded) * 100,
                 100
               );
 
               return (
                 <tr key={_id} className="border-b">
                   <td className="px-4 py-2 text-center">{petName}</td>
-                  <td className="px-4 py-2 text-center">${maxDonationAmount}</td>
+                  <td className="px-4 py-2 text-center">${totalDonationNeeded}</td>
                   <td className="px-4 py-2 text-center">
                     <div className="w-full bg-gray-300 rounded-full">
                       <div
@@ -103,12 +105,12 @@ const MyCampaign = () => {
                     >
                       Edit
                     </Link>
-                    <Link
+                    {/* <Link
                       to={`/view-donators/${_id}`}
                       className="px-3 py-1 bg-yellow-500 text-black rounded"
                     >
                       View Donators
-                    </Link>
+                    </Link> */}
                   </td>
                 </tr>
               );
@@ -126,10 +128,11 @@ const MyCampaign = () => {
             maxDonationAmount,
             donatedAmount,
             pause,
+            totalDonationNeeded,
           } = campaign;
 
           const progressPercentage = Math.min(
-            (donatedAmount / maxDonationAmount) * 100,
+            (donatedAmount / totalDonationNeeded) * 100,
             100
           );
 
@@ -137,7 +140,7 @@ const MyCampaign = () => {
             <div key={_id} className="bg-white shadow-md rounded-lg p-4 mb-4">
               <div className="flex justify-between items-center mb-2">
                 <h3 className="text-lg font-semibold">{petName}</h3>
-                <span className="text-sm">${maxDonationAmount}</span>
+                <span className="text-sm">${totalDonationNeeded}</span>
               </div>
               
               <div className="mb-3">
@@ -166,12 +169,12 @@ const MyCampaign = () => {
                 >
                   Edit
                 </Link>
-                <Link
+                {/* <Link
                   to={`/view-donators/${_id}`}
                   className="px-3 py-1 bg-yellow-500 text-black rounded flex-grow text-center"
                 >
                   View Donators
-                </Link>
+                </Link> */}
               </div>
             </div>
           );

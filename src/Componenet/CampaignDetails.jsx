@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import useCampaign from "../Hooks/useCampaign";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const stripePromise = loadStripe(import.meta.env.VITE_PUBLICATION_KEY);
 
 const CampaignDetails = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const { id } = useParams();
-  const { camp } = useCampaign();
+  const { camp,refetch } = useCampaign();
   const campaign = camp.find((c) => c._id === id);
   const [showModal, setShowModal] = useState(false);
   const [donationAmount, setDonationAmount] = useState("");
@@ -51,7 +55,7 @@ const CampaignDetails = () => {
   return (
     <div className="p-6 bg-green-50 min-h-screen">
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 mt-11">
-        <img src={petImage} alt={petName} className="w-full h-96 object-cover rounded-lg mb-4" />
+        <img src={petImage} alt={petName} className="w-full h-96  rounded-lg mb-4" />
         <h2 className="text-3xl font-bold text-green-700 mb-4">{petName}</h2>
         <p className="text-gray-600 mb-4">{shortDescription}</p>
 
@@ -96,9 +100,8 @@ const CampaignDetails = () => {
         <button
           onClick={handleDonateClick}
           disabled={isDonationDisabled}
-          className={`mt-6 w-full py-2 text-white rounded-lg ${
-            isDonationDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
-          } transition`}
+          className={`mt-6 w-full py-2 text-white rounded-lg ${isDonationDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+            } transition`}
         >
           Donate Now
         </button>
@@ -112,6 +115,11 @@ const CampaignDetails = () => {
             setDonationAmount={setDonationAmount}
             campaignId={id}
             currentDonatedAmount={donatedAmount}
+            petName={campaign.petName}
+            petImage={campaign.petImage}
+            email={user?.email}
+            name={user?.displayName}
+
           />
         </Elements>
       )}
@@ -125,10 +133,15 @@ const DonationModal = ({
   setDonationAmount,
   campaignId,
   currentDonatedAmount,
+  petName,
+  petImage,
+  email,
+  name
 }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
+  const { refetch } = useCampaign();
 
   const handleDonationSubmit = async (e) => {
     e.preventDefault();
@@ -166,6 +179,22 @@ const DonationModal = ({
         };
 
         await axiosSecure.put(`/campaign/${campaignId}`, updatedDonation);
+        const donationDetails = {
+          email,
+          name,
+          petName,
+          petImage,
+          amount: donationAmount,
+
+        };
+
+
+        // console.log(donationDetails);
+        await axiosSecure.post("/donation", donationDetails).then((res) => {
+              if (res.data.insertedId) {
+                // navigate("/donation");
+              }
+            });
 
         setShowModal(false);
       }
@@ -176,6 +205,7 @@ const DonationModal = ({
         text: "Something went wrong. Please try again.",
       });
     }
+    refetch();  
   };
 
   return (
