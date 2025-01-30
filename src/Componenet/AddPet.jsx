@@ -38,7 +38,7 @@ const AddPet = () => {
       );
       return response.data.data.url; // Return the image URL from ImageBB
     } catch (error) {
-      console.error("Image upload failed:", error);
+      // console.error("Image upload failed:", error);
       return null;
     }
   };

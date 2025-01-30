@@ -34,7 +34,7 @@ const MyCampaign = () => {
         }
       })
       .catch(error => {
-        console.error("Failed to update pet:", error);
+        // console.error("Failed to update pet:", error);
         Swal.fire({
           position: "top-center",
           icon: "error",

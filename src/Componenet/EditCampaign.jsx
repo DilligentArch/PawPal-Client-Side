@@ -71,7 +71,7 @@ const EditCampaign = () => {
         navigate("/user-dashboard/my-donations");
       }
     } catch (error) {
-      console.error("Error updating campaign:", error);
+      // console.error("Error updating campaign:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",

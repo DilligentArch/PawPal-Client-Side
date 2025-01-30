@@ -34,7 +34,7 @@ const UpdateProfile = () => {
       toast.success("Profile updated successfully!");
       setTimeout(() => navigate("/"), 2000);
     } catch (error) {
-      console.error("Error updating profile:", error);
+      // console.error("Error updating profile:", error);
       toast.error("Failed to update profile.");
     }
   };

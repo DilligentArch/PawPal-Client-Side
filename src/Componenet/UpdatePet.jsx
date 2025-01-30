@@ -55,7 +55,7 @@ const UpdatePet = () => {
       );
       return response.data.data.url;
     } catch (error) {
-      console.error("Image upload failed:", error);
+      // console.error("Image upload failed:", error);
       return null;
     }
   };
@@ -107,7 +107,7 @@ const UpdatePet = () => {
         }
       })
       .catch(error => {
-        console.error("Failed to update pet:", error);
+        // console.error("Failed to update pet:", error);
         Swal.fire({
           position: "top-center",
           icon: "error",

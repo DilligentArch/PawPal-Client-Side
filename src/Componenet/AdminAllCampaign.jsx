@@ -27,7 +27,7 @@ const AdminAllCampaign = () => {
         }
       })
       .catch((error) => {
-        console.error("Failed to update campaign:", error);
+        // console.error("Failed to update campaign:", error);
         Swal.fire({
           position: "top-center",
           icon: "error",
@@ -58,7 +58,7 @@ const AdminAllCampaign = () => {
             }
           })
           .catch((error) => {
-            console.error("Failed to delete campaign:", error);
+            // console.error("Failed to delete campaign:", error);
             Swal.fire({
               icon: "error",
               title: "Oops...",

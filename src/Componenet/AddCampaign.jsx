@@ -53,7 +53,7 @@ const AddCampaign = () => {
         reset(); // Reset the form
       }
     } catch (error) {
-      console.error("Error creating donation campaign:", error);
+      // console.error("Error creating donation campaign:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",

@@ -26,7 +26,7 @@ const handleMakeAdmin = async (userId) => {
          
       
     } catch (error) {
-      console.error("Error promoting user to admin:", error);
+      // console.error("Error promoting user to admin:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",

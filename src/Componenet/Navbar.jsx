@@ -12,7 +12,7 @@ const Navbar = () => {
   const location = useLocation();
   const dropdownRef = useRef(null);
   const { users } = useUsers();
- 
+
   useEffect(() => {
     const titles = {
       "/": "PawPal - Home",
@@ -36,10 +36,7 @@ const Navbar = () => {
     document.title = titles[location.pathname] || defaultTitle;
   }, [location.pathname]);
 
-
-  
- 
-  const currentUser = users?.find(u => u.email === user?.email);
+  const currentUser = users?.find((u) => u.email === user?.email);
   const isAdmin = currentUser?.isAdmin || false;
 
   const navLinks = [
@@ -81,17 +78,13 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-grey-600 fixed z-10  bg-opacity-15 w-full max-w-screen-2xl mx-auto ">
+    <nav className="bg-grey-600 fixed z-10 bg-opacity-15 w-full max-w-screen-2xl mx-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <img
-                src="/kitten.png"
-                alt="PawPal Logo"
-                className="h-8 w-auto"
-              />
+              <img src="/kitten.png" alt="PawPal Logo" className="h-8 w-auto" />
               <span className="ml-3 text-black text-3xl font-bold">PawPal</span>
             </Link>
           </div>
@@ -143,7 +136,9 @@ const Navbar = () => {
                     <Link
                       to="/admin-dashboard/users"
                       className={`block px-4 py-2 text-sm ${
-                        isAdmin ? 'text-gray-700 hover:bg-gray-100' : 'text-gray-400 cursor-not-allowed'
+                        isAdmin
+                          ? "text-gray-700 hover:bg-gray-100"
+                          : "text-gray-400 cursor-not-allowed"
                       }`}
                       onClick={handleAdminDashboardClick}
                       aria-disabled={!isAdmin}
@@ -190,22 +185,22 @@ const Navbar = () => {
                 </Link>
               </>
             )}
-          </div>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={toggleMobileMenu}
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ml-2"
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            <span className="sr-only">Open main menu</span>
-            {isMobileMenuOpen ? (
-              <X className="block h-6 w-6" />
-            ) : (
-              <Menu className="block h-6 w-6" />
-            )}
-          </button>
+            {/* Mobile menu button */}
+            <button
+              onClick={toggleMobileMenu}
+              className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
+            >
+              <span className="sr-only">Open main menu</span>
+              {isMobileMenuOpen ? (
+                <X className="block h-6 w-6" />
+              ) : (
+                <Menu className="block h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 

@@ -9,12 +9,9 @@ const MyDonation = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
 
-  // Filter donations made by the logged-in user
   const userDonations = donation.filter((d) => d.email === user?.email);
 
-  // Handle refund request
-  const handleRefund = async (donationId, donationAmount, 
-    petName) => {
+  const handleRefund = async (donationId, donationAmount, petName) => {
     try {
       const confirmation = await Swal.fire({
         title: "Are you sure?",
@@ -27,12 +24,10 @@ const MyDonation = () => {
       });
 
       if (confirmation.isConfirmed) {
-        // Step 1: Update the campaign's donated amount
         await axiosSecure.put(`/updated-campaign/${petName}`, {
-          donatedAmount: -donationAmount, // Subtract the donation amount
+          donatedAmount: -donationAmount,
         });
 
-        // Step 2: Delete the donation record
         await axiosSecure.delete(`/donations/${donationId}`);
 
         Swal.fire({
@@ -41,11 +36,9 @@ const MyDonation = () => {
           text: "Your donation has been refunded successfully.",
         });
 
-        // Refresh data after successful refund
         refetch();
       }
     } catch (error) {
-      console.error("Refund failed:", error);
       Swal.fire({
         icon: "error",
         title: "Refund Failed",
@@ -55,8 +48,8 @@ const MyDonation = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 w-[50rem] mt-24">
-      <h2 className="text-2xl font-bold text-center mb-6">My Donations</h2>
+    <div className="container mx-auto p-4 lg:p-6 w-full lg:w-[50rem] mt-16 lg:mt-24">
+      <h2 className="text-xl lg:text-2xl font-bold text-center mb-4 lg:mb-6">My Donations</h2>
 
       {userDonations.length === 0 ? (
         <div className="text-center text-gray-500">
@@ -64,51 +57,70 @@ const MyDonation = () => {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="table-auto w-full bg-white shadow-lg rounded-lg">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="px-4 py-2">Pet Image</th>
-                <th className="px-4 py-2">Pet Name</th>
-                <th className="px-4 py-2">Donated Amount</th>
-                <th className="px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {userDonations.map((donation) => {
-                const { _id, petName, petImage, amount } = donation;
-
-                return (
-                  <tr key={_id} className="border-b">
-                    {/* Pet Image */}
+          {/* Desktop and Tablet View */}
+          <div className="hidden sm:block">
+            <table className="table-auto w-full bg-white shadow-lg rounded-lg">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="px-4 py-2">Pet Image</th>
+                  <th className="px-4 py-2">Pet Name</th>
+                  <th className="px-4 py-2">Donated Amount</th>
+                  <th className="px-4 py-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {userDonations.map((donation) => (
+                  <tr key={donation._id} className="border-b">
                     <td className="px-4 py-2 text-center">
                       <img
-                        src={petImage}
-                        alt={petName}
+                        src={donation.petImage}
+                        alt={donation.petName}
                         className="w-12 h-12 rounded-full mx-auto"
                       />
                     </td>
-
-                    {/* Pet Name */}
-                    <td className="px-4 py-2 text-center">{petName}</td>
-
-                    {/* Donated Amount */}
-                    <td className="px-4 py-2 text-center">{amount} BDT</td>
-
-                    {/* Actions */}
+                    <td className="px-4 py-2 text-center">{donation.petName}</td>
+                    <td className="px-4 py-2 text-center">{donation.amount} BDT</td>
                     <td className="px-4 py-2 text-center">
                       <button
-                        onClick={() => handleRefund(_id, amount,
-                            petName )}
+                        onClick={() => handleRefund(donation._id, donation.amount, donation.petName)}
                         className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
                       >
                         Ask for Refund
                       </button>
                     </td>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile View */}
+          <div className="sm:hidden space-y-4">
+            {userDonations.map((donation) => (
+              <div 
+                key={donation._id} 
+                className="bg-white p-4 rounded-lg shadow space-y-3"
+              >
+                <div className="flex items-center space-x-3">
+                  <img
+                    src={donation.petImage}
+                    alt={donation.petName}
+                    className="w-16 h-16 rounded-full"
+                  />
+                  <div>
+                    <h3 className="font-medium">{donation.petName}</h3>
+                    <p className="text-gray-600">{donation.amount} BDT</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => handleRefund(donation._id, donation.amount, donation.petName)}
+                  className="w-full px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                >
+                  Ask for Refund
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

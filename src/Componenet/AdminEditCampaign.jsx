@@ -71,7 +71,7 @@ const AdminEditCampaign = () => {
         navigate("/admin-dashboard/all-donations");
       }
     } catch (error) {
-      console.error("Error updating campaign:", error);
+      // console.error("Error updating campaign:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",

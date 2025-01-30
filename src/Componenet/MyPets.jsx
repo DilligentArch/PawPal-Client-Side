@@ -105,7 +105,7 @@ const MyPets = () => {
 
   // Handlers
   const handleUpdate = (pet) => {
-    console.log("Update pet:", pet);
+    // console.log("Update pet:", pet);
     navigate('/user-dashboard/update-pets', { state: { pet } });
   };
 
@@ -154,7 +154,7 @@ const MyPets = () => {
            }
          })
          .catch(error => {
-           console.error("Failed to update pet:", error);
+          //  console.error("Failed to update pet:", error);
            Swal.fire({
              position: "top-center",
              icon: "error",

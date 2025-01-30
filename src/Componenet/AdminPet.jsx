@@ -155,7 +155,7 @@ const AdminPet = () => {
         }
       })
       .catch(error => {
-        console.error("Failed to update pet status:", error);
+        // console.error("Failed to update pet status:", error);
         Swal.fire({
           position: "top-center",
           icon: "error",
