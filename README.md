@@ -70,7 +70,7 @@ PawPal is a platform designed to connect pet lovers, donors, and adopters. It al
 ### Steps
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/your-repo/pawpal.git
+   git clone https://github.com/DilligentArch/PawPal-Client-Side.git
    cd pawpal
    ```
 
