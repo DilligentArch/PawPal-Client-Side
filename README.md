@@ -38,7 +38,7 @@ PawPal is a platform designed to connect pet lovers, donors, and adopters. It al
 - **Real-time Adoption Status**: Pets' status updates dynamically (e.g., "Adopted" or "Available").
 
 ### 🎨 **User-Friendly Design**
-- Fully responsive for desktop and mobile devices.
+- Fully responsive for desktop,tablet and mobile devices.
 
 ---
 
