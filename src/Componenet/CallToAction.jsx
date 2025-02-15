@@ -22,7 +22,7 @@ const CallToAction = () => {
             changing their lives but also enriching yours with unconditional
             love and companionship. Start your journey today!
           </p>
-          <button onClick={handleNavi} className="bg-yellow-500 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300 font-bold text-base">
+          <button onClick={handleNavi} className="bg-yellow-500 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300 font-bold text-base mb-2 md:mb-0">
             Adopt a Pet Now
           </button>
         </div>
