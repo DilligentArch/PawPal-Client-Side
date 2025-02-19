@@ -8,7 +8,7 @@ import Footer from '../Componenet/Footer';
 const DashboardLayout = () => {
     return (
         <div className='max-w-screen-2xl mx-auto' >
-            <Navbar />
+            {/* <Navbar /> */}
             <main className='h-screen lg:flex gap-36'>
                 <Sidebar   />
                 
