@@ -1,14 +1,15 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../Componenet/Navbar';
+
 import Sidebar from '../Componenet/Sidebar';
 import Footer from '../Componenet/Footer';
+import UserNavbar from '../Componenet/UserNavbar';
 
 
 const DashboardLayout = () => {
     return (
         <div className='max-w-screen-2xl mx-auto' >
-            {/* <Navbar /> */}
+            <UserNavbar />
             <main className='h-screen lg:flex gap-36'>
                 <Sidebar   />
                 
