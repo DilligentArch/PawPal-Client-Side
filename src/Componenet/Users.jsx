@@ -40,7 +40,7 @@ const handleMakeAdmin = async (userId) => {
   return (
     <div className="w-20rem">
         <div className="container mx-auto p-6 mt-12">
-      <h2 className="text-3xl font-bold text-center mb-6">All Users</h2>
+      <h2 className="text-3xl font-bold text-center mb-6 pt-5">All Users</h2>
 
       <div className="overflow-x-auto">
         <table className="table-auto w-full bg-white shadow-lg rounded-lg">
