@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import React, { useState, useContext, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useLocation, Link } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -7,15 +7,13 @@ import useUsers from "../Hooks/useUsers";
 
 const UserNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
   const location = useLocation();
-  const dropdownRef = useRef(null);
   const { users } = useUsers();
 
+  // Update document title based on current route
   useEffect(() => {
     const titles = {
-      
       "/user-dashboard/add-pets": "PawPal - Add Pet",
       "/user-dashboard/my-pets": "PawPal - My Pets",
       "/user-dashboard/adoption-requests": "PawPal - Adoption Requests",
@@ -31,9 +29,6 @@ const UserNavbar = () => {
     document.title = titles[location.pathname] || defaultTitle;
   }, [location.pathname]);
 
-  const currentUser = users?.find((u) => u.email === user?.email);
-  const isAdmin = currentUser?.isAdmin || false;
-
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/pets", label: "Pet Listing" },
@@ -41,39 +36,16 @@ const UserNavbar = () => {
   ];
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  const toggleProfile = () => setIsProfileOpen((prev) => !prev);
 
   const handleLogout = () => {
     logOut().then(() => {
       toast.success("Successfully logged out!");
-      setIsProfileOpen(false);
+      setIsMobileMenuOpen(false); // Close mobile menu if open
     });
   };
 
-  const handleAdminDashboardClick = (e) => {
-    if (!isAdmin) {
-      e.preventDefault();
-      toast.error("You don't have permission to access the admin dashboard");
-    }
-    setIsProfileOpen(false);
-  };
-
-  // Close the dropdown if clicked outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsProfileOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   return (
-    <nav className="bg-grey-600   bg-green-600  w-full fixed top-0 left-0 right-0 z-50 shadow-lg">
+    <nav className="bg-green-600 w-full fixed top-0 left-0 right-0 z-50 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -101,66 +73,21 @@ const UserNavbar = () => {
             ))}
           </div>
 
-          {/* Right Section: Profile or Login/Register */}
+          {/* Right Section: Desktop logout/login links and Mobile Hamburger */}
           <div className="flex items-center space-x-4">
             {user ? (
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={toggleProfile}
-                  className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-600 focus:ring-white"
-                  aria-expanded={isProfileOpen}
-                  aria-haspopup="true"
-                >
-                  <img
-                    className="h-8 w-8 rounded-full"
-                    src={user.photoURL || "/api/placeholder/32/32"}
-                    alt="User Profile"
-                  />
-                  <ChevronDown className="ml-1 h-4 w-4 text-white" />
-                </button>
-
-                {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 ring-1 ring-black ring-opacity-5">
-                    <Link
-                      to="/user-dashboard/add-pets"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setIsProfileOpen(false)}
-                    >
-                      User Dashboard
-                    </Link>
-                    <Link
-                      to="/admin-dashboard/users"
-                      className={`block px-4 py-2 text-sm ${
-                        isAdmin
-                          ? "text-gray-700 hover:bg-gray-100"
-                          : "text-gray-400 cursor-not-allowed"
-                      }`}
-                      onClick={handleAdminDashboardClick}
-                      aria-disabled={!isAdmin}
-                    >
-                      Admin Dashboard
-                    </Link>
-                    <Link
-                      to="/update-profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setIsProfileOpen(false)}
-                    >
-                      Update Profile
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
+              // Show Logout only on desktop view
+              <button
+                onClick={handleLogout}
+                className="hidden md:block text-black hover:bg-green-700 px-3 py-2 rounded-md text-base font-semibold transition duration-150"
+              >
+                Logout
+              </button>
             ) : (
               <>
                 <Link
                   to="/login"
-                  className={`${
+                  className={`hidden md:block ${
                     location.pathname === "/login"
                       ? "bg-soft-sky-blue text-white"
                       : "text-black"
@@ -170,7 +97,7 @@ const UserNavbar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className={`${
+                  className={`hidden md:block ${
                     location.pathname === "/register"
                       ? "bg-soft-sky-blue text-white"
                       : "text-black"
@@ -181,7 +108,7 @@ const UserNavbar = () => {
               </>
             )}
 
-            {/* Mobile menu button */}
+            {/* Mobile menu button (always visible) */}
             <button
               onClick={toggleMobileMenu}
               className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
@@ -199,7 +126,7 @@ const UserNavbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1">
@@ -207,6 +134,7 @@ const UserNavbar = () => {
               <Link
                 key={href}
                 to={href}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className={`${
                   location.pathname === href
                     ? "bg-soft-sky-blue text-white"
@@ -216,10 +144,18 @@ const UserNavbar = () => {
                 {label}
               </Link>
             ))}
-            {!user && (
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="w-full text-left block text-black hover:bg-green-700 px-3 py-2 rounded-md text-base font-medium"
+              >
+                Logout
+              </button>
+            ) : (
               <>
                 <Link
                   to="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className={`${
                     location.pathname === "/login"
                       ? "bg-soft-sky-blue text-white"
@@ -230,6 +166,7 @@ const UserNavbar = () => {
                 </Link>
                 <Link
                   to="/register"
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className={`${
                     location.pathname === "/register"
                       ? "bg-soft-sky-blue text-white"
