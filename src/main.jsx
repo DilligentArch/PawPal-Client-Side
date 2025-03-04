@@ -38,6 +38,8 @@ import AdminEditCampaign from "./Componenet/AdminEditCampaign";
 import MyDonation from "./Componenet/MyDonation";
 import UpdateProfile from "./Componenet/UpdateProfile";
 import ErrorElement from "./Componenet/ErrorElement";
+import Overview from "./Componenet/Overview";
+import AdminOverview from "./Componenet/AdminOverview";
 
 const queryClient = new QueryClient();
 
@@ -89,6 +91,10 @@ const router = createBrowserRouter([
     </PrivateRoute>,
     children: [
       {
+        path:"overview",
+        element: <Overview/>,
+      },
+      {
         path:"add-pets",
         element: <AddPet />,
       },
@@ -128,6 +134,10 @@ const router = createBrowserRouter([
       <AdminDashboard />
     </AdminRoute>,
     children: [
+      {
+        path: "overview",
+        element:<AdminOverview />,
+      },
       {
         path: "users",
         element:<Users />,

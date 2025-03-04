@@ -127,14 +127,14 @@ const Navbar = () => {
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 ring-1 ring-black ring-opacity-5">
                     <Link
-                      to="/user-dashboard/add-pets"
+                      to="/user-dashboard/overview"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsProfileOpen(false)}
                     >
                       User Dashboard
                     </Link>
                     <Link
-                      to="/admin-dashboard/users"
+                      to="/admin-dashboard/overview"
                       className={`block px-4 py-2 text-sm ${
                         isAdmin
                           ? "text-gray-700 hover:bg-gray-100"

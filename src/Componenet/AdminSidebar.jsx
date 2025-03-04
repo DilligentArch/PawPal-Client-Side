@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaUsers, FaPaw, FaHandsHelping, FaDonate } from "react-icons/fa"; // Added FaUsers for Users
+import { FaUsers, FaPaw, FaHandsHelping, FaDonate, FaTachometerAlt } from "react-icons/fa"; // Added FaUsers for Users
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const AdminSidebar = () => {
@@ -17,6 +17,15 @@ const AdminSidebar = () => {
       {/* Navigation Links */}
       <nav className="flex-grow">
         <ul className="space-y-4 px-4">
+           <li>
+                      <Link
+                        to="/Admin-dashboard/overview"
+                        className="flex items-center gap-4 p-3 rounded-lg hover:bg-green-700 transition"
+                      >
+                        <FaTachometerAlt />
+                        <span>Overview</span>
+                      </Link>
+                    </li>
           {/* Users */}
           <li>
             <Link
